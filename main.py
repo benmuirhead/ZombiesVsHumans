@@ -20,7 +20,7 @@ humanNames=humanNames[0:numberofHumans]
 humans=humans[0:numberofHumans]
 
 
-numberofZombies=5
+numberofZombies=10
 zombieNames=['ein', 'zwei', 'drei', 'vier', 'funf','sechs','seiben','acht','neun','zehn']
 zombies=['ein', 'zwei', 'drei', 'vier', 'funf','sechs','sieben','acht','neun','zehn']
 zColors=['salmon','orange','pink','orange','gold','aqua','darkblue','green','magenta','khaki']
@@ -44,25 +44,25 @@ hSpread=50
 #Initialize Humans
 for j in range(0,hcount):   
     for i in range(0,len(humanNames)):
-        humanNames[i] = turtle.Turtle()
-        #humanNames[i].color(zColors[i])
-        humanNames[i].speed(speed)
-        humanNames[i].penup()
+        humans[i] = turtle.Turtle()
+        #humans[i].color(zColors[i])
+        humans[i].speed(speed)
+        humans[i].penup()
         if i == 0 and j == 0:
             #Draw Box       
-            humanNames[i].goto(-boxSize,-boxSize)
-            humanNames[i].pendown()
-            humanNames[i].goto(boxSize,-boxSize)
-            humanNames[i].goto(boxSize,boxSize)
-            humanNames[i].goto(-boxSize,boxSize)
-            humanNames[i].goto(-boxSize,-boxSize)
-            humanNames[i].write(" size: "+str(boxSize*2))
-            humanNames[i].penup()            
+            humans[i].goto(-boxSize,-boxSize)
+            humans[i].pendown()
+            humans[i].goto(boxSize,-boxSize)
+            humans[i].goto(boxSize,boxSize)
+            humans[i].goto(-boxSize,boxSize)
+            humans[i].goto(-boxSize,-boxSize)
+            #humans[i].write(" size: "+str(boxSize*2))
+            humans[i].penup()            
         x=random.randint(-hradius,hradius)
         y=random.randrange(-1,3,2)*math.sqrt(hradius**2-x**2)+random.randint(-hSpread,hSpread)        
         x=x+random.randint(-hSpread,hSpread)
-        humanNames[i].goto(x,y)
-        humanNames[i].pendown()
+        humans[i].goto(x,y)
+        humans[i].pendown()
         
 
 #Zombie Start Range
@@ -71,46 +71,46 @@ radius2=200
 z2Spread=30
 #Initialize Zombies
 for j in range(0,zcount):
-    #for i in range(0,0):#len(zombieNames)/2):
-        #zombieNames[i] = turtle.Turtle()
-        #zombieNames[i].color(zColors[i])#'brown')
-        #zombieNames[i].penup()
-        #zombieNames[i].goto(random.randint(-radius1,radius1),random.randint(-radius1,radius1))
-        #zombieNames[i].pendown()
+    #for i in range(0,0):#len(zombies)/2):
+        #zombies[i] = turtle.Turtle()
+        #zombies[i].color(zColors[i])#'brown')
+        #zombies[i].penup()
+        #zombies[i].goto(random.randint(-radius1,radius1),random.randint(-radius1,radius1))
+        #zombies[i].pendown()
     for i in range(0,len(zombieNames)):
-            zombieNames[i] = turtle.Turtle()
-            zombieNames[i].color(zColors[i])#'brown')
-            zombieNames[i].penup()
+            zombies[i] = turtle.Turtle()
+            zombies[i].color(zColors[i])#'brown')
+            zombies[i].penup()
             x=random.randint(-radius2,radius2)
             y=random.randrange(-1,3,2)*math.sqrt(radius2**2-x**2)+random.randint(-z2Spread,z2Spread)        
             x=x+random.randint(-z2Spread,z2Spread)            
-            zombieNames[i].goto(x,y)
-            zombieNames[i].pendown()    
+            zombies[i].goto(x,y)
+            zombies[i].pendown()    
 
     
 
-dictHumans= dict(zip(humans,humanNames))
-dictZombies= dict(zip(zombies,zombieNames))
+dictHumans= dict(zip(humanNames,humans))
+dictZombies= dict(zip(zombieNames,zombies))
 dTraveled=[]
-trials=1000
+trials=500
 rounds=0
 ###Movement
 #for t in range(0,trials):
-while rounds<trials:#(len(humanNames)>1 or rounds<trials):
+while rounds<trials: #(len(humans)>1 or rounds<trials):
     #Move Humans
-    for i in range(0,len(humanNames)):
-        #print humans[i]+str(humanNames[i].pos())
-        hx=humanNames[i].pos()[0]
-        hy=humanNames[i].pos()[1]
+    for i in range(0,len(humans)):
+        #print("hello")
+        hx=humans[i].pos()[0]
+        hy=humans[i].pos()[1]
         hdistances={}
         objectsX={}
         objectsY={}
-        for j in range(0,len(zombieNames)):
-            zx=zombieNames[j].pos()[0]
-            zy=zombieNames[j].pos()[1]
+        for j in range(0,len(zombies)):
+            zx=zombies[j].pos()[0]
+            zy=zombies[j].pos()[1]
             distance=math.sqrt((hx-zx)**2 + (hy-zy)**2)
             #if rounds%5==0:
-                #zombieNames[j].write(round(distance,0),False)
+                #zombies[j].write(round(distance,0),False)
             hdistances[zombies[j]]=distance
          
             objectsX[zombies[j]]=[hx-zx,distance,(hx-zx)/distance]
@@ -131,7 +131,7 @@ while rounds<trials:#(len(humanNames)>1 or rounds<trials):
         objectsY['left']=[0,1,1]  
         objectsY['top']=[d2t,abs(d2t),1]
         objectsY['bottom']=[d2b,abs(d2b),1]
-
+        
         sObjectsX = sorted(objectsX.items(),key=lambda x: x[1][1], reverse=False)
         sObjectsY = sorted(objectsY.items(),key=lambda x: x[1][1], reverse=False)
         
@@ -161,10 +161,10 @@ while rounds<trials:#(len(humanNames)>1 or rounds<trials):
         #my2=dy2/math.sqrt(dx2**2+dy2**2)        
         
         #wallDist={}
-        #wallDist['right']=abs(boxSize-humanNames[i].pos()[0])        
-        #wallDist['left']=abs(-boxSize-humanNames[i].pos()[0])
-        #wallDist['top']=abs(boxSize-humanNames[i].pos()[1])
-        #wallDist['bottom']=abs(-boxSize-humanNames[i].pos()[1])
+        #wallDist['right']=abs(boxSize-humans[i].pos()[0])        
+        #wallDist['left']=abs(-boxSize-humans[i].pos()[0])
+        #wallDist['top']=abs(boxSize-humans[i].pos()[1])
+        #wallDist['bottom']=abs(-boxSize-humans[i].pos()[1])
         #hdistances.update(wallDist) 
       
         
@@ -189,86 +189,96 @@ while rounds<trials:#(len(humanNames)>1 or rounds<trials):
                 ##print(c)
         #else:                                                    
             #cZombie=dictZombies[c]
-        #dx=humanNames[i].pos()[0]-cZombie.pos()[0]
-        #dy=humanNames[i].pos()[1]-cZombie.pos()[1]
+        #dx=humans[i].pos()[0]-cZombie.pos()[0]
+        #dy=humans[i].pos()[1]-cZombie.pos()[1]
         #mx=hspeed*dx/math.sqrt((hx-zx)**2 + (hy-zy)**2)
         #my=hspeed*dy/math.sqrt((hx-zx)**2 + (hy-zy)**2)
             
         
-        humanNames[i].goto(hx+mx2,hy+my2)
-       
+        humans[i].goto(hx+mx2,hy+my2)
+        
         #print round(dx2,5),round(dy2,5)
-        print round(mx2,2),round(my2,2), math.sqrt(mx2**2+my2**2)
+        #print(round(mx2,2),round(my2,2), math.sqrt(mx2**2+my2**2))
         dTraveled.append(math.sqrt(mx2**2+my2**2))
-        
-        
-###Move zombies
-
     
-    for i in range(0,len(zombieNames)):
-        #print humans[i]+str(humanNames[i].pos())
-        zx=zombieNames[i].pos()[0]
-        zy=zombieNames[i].pos()[1]
+    
+    
+    ###Move zombies
+    
+    #if 1==1:
+    for i in range(0,len(zombies)):
+        #print humans[i]+str(humans[i].pos())
+        zx=zombies[i].pos()[0]
+        zy=zombies[i].pos()[1]
         zdistances={}
-        for j in range(0,len(humanNames)):
-            hx=humanNames[j].pos()[0]
-            hy=humanNames[j].pos()[1]
+        for j in range(0,len(humans)):
+            hx=humans[j].pos()[0]
+            hy=humans[j].pos()[1]
             distance=math.sqrt((zx-hx)**2 + (zy-hy)**2)
-            #zombieNames[j].write(round(distance,0),False)
+            #zombies[j].write(round(distance,0),False)
             zdistances[humans[j]]=distance
             #print distances
         sZdistances = sorted(zdistances.items(),key=lambda x: x[1], reverse=False)
-        c=sZdistances[0][0]
-        cHuman=dictHumans[c]
-        dx=zombieNames[i].pos()[0]-cHuman.pos()[0]
-        dy=zombieNames[i].pos()[1]-cHuman.pos()[1]
+        
+        #c=sZdistances[0][0]
+        #cHuman=dictHumans[c]
+            
+        cHuman=sZdistances[0][0]
+        dx=zombies[i].pos()[0]-cHuman.pos()[0]
+        dy=zombies[i].pos()[1]-cHuman.pos()[1]
         mx=zspeed*dx/math.sqrt((zx-hx)**2 + (zy-hy)**2)
         my=zspeed*dy/math.sqrt((zx-hx)**2 + (zy-hy)**2)
         #cHuman.goto(hx+mx,hy+my)
-        zombieNames[i].goto(zx-mx,zy-my)
+        zombies[i].goto(zx-mx,zy-my)
         #print math.sqrt(mx**2+my**2)
-    hlength=len(humanNames)    
-    zlength=len(zombieNames)    
+        
+    
+    hlength=len(humans)    
+    zlength=len(zombies)    
     for i in range(0,hlength):
         for j in range(0,zlength):
-            hx=humanNames[i].pos()[0]
-            hy=humanNames[i].pos()[1]
-            zx=zombieNames[j].pos()[0]
-            zy=zombieNames[j].pos()[1] 
+            hx=humans[i].pos()[0]
+            hy=humans[i].pos()[1]
+            zx=zombies[j].pos()[0]
+            zy=zombies[j].pos()[1] 
             distance=math.sqrt((zx-hx)**2 + (zy-hy)**2)
             if distance<25:
                 #print ("round "+str(rounds)+" "+str(zombies[j])+" ("+str(zombieNames[j].color()[0])+")"+"->"+str(humans[i])+": "+str(round(distance,1)))
-                humanNames[i].color('red')
- 
+                humans[i].color('red')
+    
                 
-   
-
+    
+    
     
     toDelete=[]
     toDeleteList=[]
-    for k in range(0,len(humanNames)):
-        if 'red' in humanNames[k].color():
+    for k in range(0,len(humans)):
+        if 'red' in humans[k].color():
             toDelete.append(k)
     
     list.sort(toDelete, reverse=True)
     for n in toDelete:
-        toDeleteList.append(humans[n])
+        toDeleteList.append(humanNames[n])
+    
     if len(toDeleteList)>0:
-        print "Deleting "+ str(toDeleteList)
+        print("Deleting "+ str(toDeleteList))
+    
     #print "Deleting "+str(toDelete)
     for m in toDelete:
-        del humanNames[m]
         del humans[m]
-
+        del humanNames[m]
+    
     
     
     #print "End of round "+str(rounds)
     #print ("---")
-    if len(humanNames) == 0:
+    if len(humans) == 0:
         break
+    
     rounds=rounds+1
 
+
 print("This set started with "+str(numberofHumans)+" humans and "+str(numberofZombies)+" Zombies.")
-print("It lasted "+str(rounds)+" rounds with "+str(len(humanNames))+" survivors")
+print("It lasted "+str(rounds)+" rounds with "+str(len(humans))+" survivors")
 
 wn.exitonclick()
